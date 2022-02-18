@@ -14,3 +14,5 @@
     - number4: averageAmountPerSale
     - number5: averageItemPrice
 
+- extraction des constantes.
+- 
