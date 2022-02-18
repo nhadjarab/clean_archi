@@ -1,5 +1,0 @@
-/Users/rui/Dropbox/SandBox22/CleanArch5AL2/SalesReporterKata/obj/Debug/net6.0/SalesReporterKata.csproj.AssemblyReference.cache
-/Users/rui/Dropbox/SandBox22/CleanArch5AL2/SalesReporterKata/obj/Debug/net6.0/SalesReporterKata.GeneratedMSBuildEditorConfig.editorconfig
-/Users/rui/Dropbox/SandBox22/CleanArch5AL2/SalesReporterKata/obj/Debug/net6.0/SalesReporterKata.AssemblyInfoInputs.cache
-/Users/rui/Dropbox/SandBox22/CleanArch5AL2/SalesReporterKata/obj/Debug/net6.0/SalesReporterKata.AssemblyInfo.cs
-/Users/rui/Dropbox/SandBox22/CleanArch5AL2/SalesReporterKata/obj/Debug/net6.0/SalesReporterKata.csproj.CoreCompileInputs.cache
