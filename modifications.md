@@ -15,4 +15,7 @@
     - number5: averageItemPrice
 
 - extraction des constantes.
-- 
+
+- extraction du Parser dans sa propre classe 
+- ajout des classe SaleReport et saleDTO
+- implémentation du desgin pattern command. il ne reste que l'implémenation de la commande `report`

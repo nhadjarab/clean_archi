@@ -4,61 +4,42 @@ using static SalesReporterKata.Constants;
 
 public static class Program
 {
-	//lots of comments!
+	
+	private static void StartProgram()
+	{	
+		//add a title to our app
+		Console.WriteLine(SALES_VIEWER);
+	}
+	
+	private static string GetCommand(string[] args)
+	{
+		return args.Length > 0 ? args[0] : Commands.wrongOrMissingCommand.ToString();
+	}
+	
+	private static string GetFile(string[] args)
+	{
+		return args.Length >= 2 ? args[1] : "./data.csv";
+	}
+	
+	
 	public static void Main(string[] args)
 	{
-		//add a title to our app  
-		Console.WriteLine(SALES_VIEWER);
-		//extract the command name from the args  
-		string command = args.Length > 0 ? args[0] : "unknown";  
-		string file = args.Length >= 2 ? args[1] : "./data.csv";
-		//read content of our data file  
-		//[2012-10-30] rui : actually it only works with this file, maybe it's a good idea to pass file //name as parameter to this app later?  
-		string[] fileContentString = File.ReadAllLines(file);  
-		//if command is print  
+		  
+		StartProgram();
+		var command = GetCommand(args); 
+		var file = GetFile(args);
+		CsvParser parser = new CsvParser(file);
+		var sales = parser.GenerateSalesList();
+
 		if (command == Commands.print.ToString())  
 		{  
-			 //get the header line  
-			 string headerLine = fileContentString[0];  
-			 //get other content lines  
-			 var dataLines = fileContentString.Skip(1);
-			 var columnInfos = new List<(int index, int size, string name)>();
-			 //build the header of the table with column names from our data file  
-			 int i = 0;
-			 foreach (var columName in headerLine.Split(','))
-			 {
-				 columnInfos.Add((i++, columName.Length, columName));
-			 }
-
-			 var headerString  = String.Join(
-				 " | ", 
-				 columnInfos.Select(x=>x.name).Select(
-					 (val,ind) => val.PadLeft(16)));
-
-			 Console.WriteLine("+" + new String('-', headerString.Length + 2) + "+");
-			 Console.WriteLine("| " + headerString + " |");
-			 Console.WriteLine("+" + new String('-', headerString.Length +2 ) + "+");
-
-			 //then add each line to the table  
-			 foreach (string line in dataLines)  
-			 { 
-				 //extract columns from our csv line and add all these cells to the line  
-				 var cells = line.Split(',');
-				 var tableLine  = String.Join(
-		            " | ", 
-		            
-		            line.Split(',').Select(
-			            (val,ind) => val.PadLeft(16)));
-	            Console.WriteLine($"| {tableLine} |");
-			 } 
-			 Console.WriteLine("+" + new String('-', headerString.Length+2) + "+");
-
-			// if command is report
+			ICommand print = new PrintCommand(sales);
+			print.Execute();
 		} 
 		else if (command == Commands.report.ToString())  
 		{  
 		 //get all the lines without the header in the first line  
-			 var dataLines = fileContentString.Skip(1);  
+		 var dataLines = parser.DataLines();  
 			 //declare variables for our conters  
 			 int numberOfSales = 0, totalItemsSold = 0;  
 			 double averageAmountPerSale = 0.0, averageItemPrice = 0.0, totalSalesAmount = 0;  
@@ -87,9 +68,12 @@ public static class Program
 			 Console.WriteLine($"| {AVERAGE_ITEM_PRICE.PadLeft(30)} | {averageItemPrice.ToString().PadLeft(10)} |");
 			 Console.WriteLine($"+{new String('-',45)}+");
 		}  
-		else  
+		else
 		{
-			Console.WriteLine(HELP_MESSAGE); 
+			ICommand help = new WrongOrMissingCommand(HELP_MESSAGE);
+			help.Execute();
 		}
 	}
+
+	
 }
